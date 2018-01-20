@@ -36,37 +36,36 @@ class SpeechInput extends Component {
       dream: "",
       showFinalSpeech: false
     };
-    // this.reset = this.reset.bind(this)
     this.toggleListen = this.toggleListen.bind(this)
-    this.handleClick = this.handleClick.bind(this);
+    this.handleListen = this.handleListen.bind(this);
   }
 
-  // reset() {
-  //   this.setState({
-  //     listening: false
-  //   })
-  // }
 
   toggleListen() {
-    this.setState({
-      listening: !this.state.listening
-    })
+    this.setState({ listening: !this.state.listening }, this.handleListen)
   }
 
-  handleClick() {
+  handleListen() {
+
+    console.log('listening', this.state.listening)
 
     if (this.state.listening) {
       recognition.start()
+      recognition.onend = () => {
+        console.log("Continue listening please")
+        recognition.start()
+      }
+
     } else {
+      console.log('else statement')
       recognition.stop()
+      recognition.onend = () => {
+        console.log("Stop listening please")
+      }
     }
 
     recognition.onstart = () => {
       console.log("Listening")
-    }
-
-    recognition.onend = () => {
-      console.log("End listening")
     }
 
     recognition.onresult = event => {
@@ -99,10 +98,7 @@ class SpeechInput extends Component {
           <div id="interimResults" style={interimStyle} />
           <div id="finalResults" style={finalStyle} />
         </div>
-        <button onClick={() => {
-            this.toggleListen()
-            this.handleClick()
-          }}
+        <button onClick={this.toggleListen}
           style={microphoneButton}>
           <img style={microphoneImg} src="/images/microphone.png" />
         </button>
