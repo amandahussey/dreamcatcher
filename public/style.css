@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  background: rgb(68, 6, 68);
+  margin: 0;
 }
 
 a {
