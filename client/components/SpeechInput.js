@@ -52,7 +52,7 @@ class SpeechInput extends Component {
     if (this.state.listening) {
       recognition.start()
       recognition.onend = () => {
-        console.log("Continue listening please")
+        console.log("...continue listening...")
         recognition.start()
       }
 
@@ -60,7 +60,7 @@ class SpeechInput extends Component {
       console.log('else statement')
       recognition.stop()
       recognition.onend = () => {
-        console.log("Stop listening please")
+        console.log("Stopped listening")
       }
     }
 
@@ -82,7 +82,7 @@ class SpeechInput extends Component {
         else interimTranscripts += transcript;
       }
       interim.innerHTML = interimTranscripts;
-      final.innerHTML = finalTranscripts + ' ';
+      final.innerHTML += finalTranscripts + ' ';
     }
 
     recognition.onerror = event => {
@@ -131,10 +131,10 @@ const styles = {
     padding: ".5em"
   },
   interimStyle: {
-    color: "yellow"
+    color: "gray"
   },
   finalStyle: {
-    color: "green"
+    color: "black"
   },
   resultsStyle: {
     color: "gray",
