@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import { logout } from "../store";
-import { SpeechInput, Interpretation, NavBar, Home } from "./index";
+import { NavBar, HomeSpeechContainer } from "./index";
 
 /**
  * COMPONENT
@@ -17,7 +17,7 @@ const Main = props => {
   return (
     <div>
       <NavBar />
-      <Home />
+      <HomeSpeechContainer />
       {/* <SpeechInput /> */}
     </div>
   );

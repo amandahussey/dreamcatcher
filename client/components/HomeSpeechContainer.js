@@ -5,15 +5,19 @@ import { withRouter, Link } from "react-router-dom";
 import sentiment from "sentiment";
 import { postDream } from "../store";
 
-const test =
-  "Last night I had a scary dream. I was in an old abandonded cabin, and a clown with a chainsaw was chasing me. I locked myself in the greenhouse in the back, but he found me. I was laying on the ground and couldn/'t move. I woke up before he got any closer.";
+//------------------------------ANIMATE-------------------------------------
+const handleClick = () => {
+  document.getElementById('dreamcatcher-img').className = 'animate'
+  document.getElementById('title').className = 'dissolve'
+  document.getElementById('dreamcircle').className = 'appear'
+  document.getElementById('click-to-start').className = 'appear'
+}
+//--------------------------------------------------------------------------
 
-const test2 = "Hey you worthless scumbag";
-
+//------------------------------SPEECH--------------------------------------
 const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 const SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
-const SpeechRecognitionEvent =
-  SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+const SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
 const grammar =
   "#JSGF V1.0; grammar commands; public <command> = ( start | end ) dream";
@@ -26,9 +30,9 @@ speechRecognitionList.addFromString(grammar, 1);
 recognition.continous = true;
 recognition.interimResults = true;
 recognition.lang = "en-US";
+//--------------------------------------------------------------------------
 
-
-class SpeechInput extends Component {
+class HomeSpeechContainer extends Component {
   constructor() {
     super();
     this.state = {
@@ -42,7 +46,11 @@ class SpeechInput extends Component {
 
 
   toggleListen() {
-    this.setState({ listening: !this.state.listening }, this.handleListen)
+    this.setState({ listening: !this.state.listening }, () => {
+      if (this.state.listening) document.getElementById('dreamcircle').className = 'appear rotate'
+      else document.getElementById('dreamcircle').className = 'appear'
+      this.handleListen()
+    })
   }
 
   handleListen() {
@@ -93,15 +101,30 @@ class SpeechInput extends Component {
 
   render() {
     return (
-      <div style={speechContainer}>
-        <div id="results" style={resultsStyle}>
-          <div id="interimResults" style={interimStyle} />
-          <div id="finalResults" style={finalStyle} />
+      <div>
+
+        <div style={container}>
+          <div id='title' style={title}>d r e a m c a t c h e r</div>
+          <img id='dreamcatcher-img'
+            src='/images/dreamcatcher.png'
+            style={img}
+            onClick={handleClick}
+          />
+          <img
+            id='dreamcircle'
+            src='/images/dreamcircle.png'
+            onClick={this.toggleListen}
+          />
+          <p id='click-to-start'>...click to begin recording...</p>
         </div>
-        <button onClick={this.toggleListen} style={microphoneButton}>
-          <img style={microphoneImg} src="/images/microphone.png" />
-        </button>
-        <div id="diagnostic" />
+
+        <div style={speechContainer}>
+          <div id="results" style={resultsStyle}>
+            <div id="interimResults" style={interimStyle} />
+            <div id="finalResults" style={finalStyle} />
+          </div>
+        </div>
+
       </div>
     );
   }
@@ -112,9 +135,25 @@ const mapDispatch = dispatch => {
   return bindActionCreators({postDream}, dispatch)
 };
 
-export default connect(mapState, mapDispatch)(SpeechInput);
+export default connect(mapState, mapDispatch)(HomeSpeechContainer);
 
 const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  title: {
+    fontSize: '40px',
+    fontFamily: "'Raleway Dots', cursive",
+    padding: '1em',
+    textAlign: 'center',
+  },
+  img: {
+    width: '400px',
+    padding: '1em'
+  },
   speechContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -122,11 +161,6 @@ const styles = {
     position: 'relative',
     textAlign: 'center',
     color: 'white'
-  },
-  microphoneButton: {
-    borderRadius: "50%",
-    background: "black",
-    width: '60px'
   },
   resultsStyle: {
     padding: "2em",
@@ -149,9 +183,10 @@ const styles = {
 };
 
 const {
+  container,
+  title,
+  img,
   speechContainer,
-  microphoneButton,
-  microphoneImg,
   interimStyle,
   finalStyle,
   resultsStyle

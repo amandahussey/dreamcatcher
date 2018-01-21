@@ -6,7 +6,6 @@
 export { default as Main } from "./Main";
 export { default as UserHome } from "./UserHome";
 export { Login, Signup } from "./AuthForm";
-export { default as SpeechInput } from "./SpeechInput";
+export { default as HomeSpeechContainer } from "./HomeSpeechContainer";
 export { default as Interpretation } from "./Interpretation";
 export { default as NavBar } from "./NavBar";
-export { default as Home } from './Home'

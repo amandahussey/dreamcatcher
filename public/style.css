@@ -27,7 +27,7 @@ form div {
 }
 
 #title {
-  transition: all 1s;
+  transition: all 1s 2s;
 }
 
 #title.dissolve {
@@ -35,7 +35,7 @@ form div {
 }
 
 #dreamcatcher-img {
-  transition: transform 1.5s ease-in-out .2s, opacity 1s ease-in-out 1.7s;
+  transition: transform 1.5s .5s, opacity 1s 2s;
 }
 
 #dreamcatcher-img.animate {
@@ -46,10 +46,11 @@ form div {
 
 #dreamcircle {
   width: 80px;
+  position: fixed;
+  top: 257px;
   visibility: hidden;
   opacity: 0;
-  transition: all 1s ease-in-out 1.8s;
-  transform: translateY(-362px);
+  transition: opacity 1s 2s, visibility 1s 2s, transform 1s;
 }
 
 #dreamcircle.appear {
@@ -59,12 +60,12 @@ form div {
 
 #click-to-start {
   width: 200px;
+  position: absolute;
+  bottom: 255px;
   text-align: center;
   visibility: hidden;
   opacity: 0;
-  transition: all 1s ease-in-out 1.8s;
-  transform: translateY(-300px);
-
+  transition: all 1s 2.6s;
 }
 
 #click-to-start.appear {
@@ -72,4 +73,15 @@ form div {
   opacity: 1;
 }
 
+#dreamcircle.rotate {
+  animation: rotate 2s infinite linear;
+}
 
+@keyframes rotate {
+  from {
+      -webkit-transform: rotate(0deg);
+  }
+  to {
+      -webkit-transform: rotate(359deg);
+  }
+}
