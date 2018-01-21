@@ -4,17 +4,21 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import sentiment from "sentiment";
 import { postDream } from "../store";
+import { DreamText } from './index'
 
-//------------------------------ANIMATE-------------------------------------
+
+//--------------------------ANIMATE------------------------------------------
+
 const handleClick = () => {
   document.getElementById('dreamcatcher-img').className = 'animate'
   document.getElementById('title').className = 'dissolve'
   document.getElementById('dreamcircle').className = 'appear'
   document.getElementById('click-to-start').className = 'appear'
 }
-//--------------------------------------------------------------------------
 
-//------------------------------SPEECH--------------------------------------
+
+//-------------------------SPEECH-SETUP--------------------------------------
+
 const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 const SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 const SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
@@ -30,25 +34,51 @@ speechRecognitionList.addFromString(grammar, 1);
 recognition.continous = true;
 recognition.interimResults = true;
 recognition.lang = "en-US";
-//--------------------------------------------------------------------------
+
+
+//-------------------------COMPONENT-START-----------------------------------
 
 class HomeSpeechContainer extends Component {
+
   constructor() {
     super();
     this.state = {
       listening: false,
+      dreamText: '',
       showFinalSpeech: false
     };
     this.toggleListen = this.toggleListen.bind(this)
-    this.handleListen = this.handleListen.bind(this);
+    this.handleEnd = this.handleEnd.bind(this)
+    this.handleListen = this.handleListen.bind(this)
   }
 
 
   toggleListen() {
     this.setState({ listening: !this.state.listening }, () => {
-      if (this.state.listening) document.getElementById('dreamcircle').className = 'appear rotate'
-      else document.getElementById('dreamcircle').className = 'appear'
+
+      const dreamcircle = document.getElementById('dreamcircle')
+      const clickToStart = document.getElementById('click-to-start')
+      let dreamcircleClass, clickToStartInnerHTML
+
+      if (this.state.listening) {
+        dreamcircleClass = 'appear rotate'
+        clickToStartInnerHTML = '...recording dream...'
+      } else {
+        dreamcircleClass = 'appear'
+        clickToStartInnerHTML = '...click to start recording dream...'
+      }
+
+      dreamcircle.className = dreamcircleClass
+      clickToStart.innerHTML = clickToStartInnerHTML
       this.handleListen()
+
+    })
+  }
+
+  handleEnd(dreamText) {
+    document.getElementById('dreamcircle').className = 'appear'
+    this.setState({ dreamText }, () => {
+      this.setState({ showFinalSpeech: true })
     })
   }
 
@@ -70,6 +100,7 @@ class HomeSpeechContainer extends Component {
       recognition.stop()
       recognition.onend = () => {
         console.log("Stopped listening per click")
+        this.handleEnd(finalTranscript)
       }
     }
 
@@ -87,22 +118,21 @@ class HomeSpeechContainer extends Component {
       }
       console.log('finalTranscript', finalTranscript)
 
+
+      //-------------------------COMMANDS------------------------------------
+
       const transcriptArr = finalTranscript.split(' ')
       const stopCmd = transcriptArr.slice(-3, -1)
       console.log('stopCmd', stopCmd)
 
       if ( (stopCmd[0] === 'stop' && stopCmd[1] === 'listening') ||
-           (stopCmd[0] === 'stop' && stopCmd[1] === 'recording') ||
-           (stopCmd[1] === 'stop')
-        ) {
+           (stopCmd[0] === 'stop' && stopCmd[1] === 'recording') )
+      {
         recognition.stop()
         recognition.onend = () => {
-          console.log("Stopped listening per command")
-          document.getElementById('dreamcircle').className = 'appear'
-          const dream = finalTranscript
-          console.log('finalTranscript onend cmd: ', finalTranscript)
-          console.log('Dream: ', dream)
-          this.props.postDream({dream})
+          console.log('Stopped listening per command')
+          const dreamText = transcriptArr.slice(0, -3).join(' ')
+          this.handleEnd(dreamText)
         }
       }
     }
@@ -113,8 +143,12 @@ class HomeSpeechContainer extends Component {
 
   }
 
+//------------------------------RENDER---------------------------------------
+
   render() {
-    return (
+    console.log('this.state.dreamText', this.state.dreamText)
+    return !this.state.showFinalSpeech ?
+    (
       <div style={container}>
         <div id='title' style={title}>d r e a m c a t c h e r</div>
         <img id='dreamcatcher-img'
@@ -127,11 +161,15 @@ class HomeSpeechContainer extends Component {
           src='/images/dreamcircle.png'
           onClick={this.toggleListen}
         />
-        <p id='click-to-start'>...click to begin recording...</p>
+        <p id='click-to-start'>...click to start recording dream...</p>
       </div>
-    );
+    ) : (
+      <DreamText dreamText={this.state.dreamText} postDream={this.props.postDream} />
+    )
   }
 }
+
+//-------------------------CONNECT-COMPONENT---------------------------------
 
 const mapState = null;
 const mapDispatch = dispatch => {
@@ -139,6 +177,9 @@ const mapDispatch = dispatch => {
 };
 
 export default connect(mapState, mapDispatch)(HomeSpeechContainer);
+
+
+//------------------------------CSS------------------------------------------
 
 const styles = {
   container: {
