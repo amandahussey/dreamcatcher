@@ -28,10 +28,10 @@ class NavBar extends Component {
         </div>
         <div id="dropdown" className="dropdown-content">
           <div style={record}>
-            <Link to="/record-new-dream">record</Link>
+            <Link to="/">record</Link>
           </div>
           <div style={history}>
-            <Link to="#">history</Link>
+            <Link to="/dream-history">history</Link>
           </div>
           <div style={settings}>
             <Link to="#">settings</Link>

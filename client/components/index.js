@@ -11,3 +11,5 @@ export { default as Interpretation } from "./Interpretation";
 export { default as NavBar } from "./NavBar";
 export { default as DreamText } from './DreamText'
 export { default as SpeechContainer } from './SpeechContainer'
+export { default as DreamHistory } from './DreamHistory'
+export { default as DreamCard } from './DreamCard'

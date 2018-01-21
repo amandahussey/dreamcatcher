@@ -11,9 +11,7 @@ const Interpretation = props => {
   return (
     <div>
       <h3>Translation</h3>
-      <div id="results" style={resultsStyle}>
-        <div id="interimResults" style={interimStyle}></div>
-      </div>
+      <div></div>
     </div>
   )
 

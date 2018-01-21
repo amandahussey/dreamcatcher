@@ -137,7 +137,6 @@ class SpeechContainer extends Component {
 //------------------------------RENDER---------------------------------------
 
   render() {
-    console.log('this.state.dreamText', this.state.dreamText)
     return !this.state.showFinalSpeech ?
     (
       <div style={container}>

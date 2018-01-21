@@ -31,6 +31,7 @@
     "express-session": "^1.15.1",
     "fs": "0.0.1-security",
     "history": "^4.6.3",
+    "moment": "^2.20.1",
     "morgan": "^1.8.1",
     "node-ddg-api": "^0.1.4",
     "node-pos": "0.0.4",

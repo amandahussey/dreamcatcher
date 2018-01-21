@@ -47,22 +47,22 @@ class HomeSpeechContainer extends Component {
       showFinalSpeech: false,
       submittedDream: false
     };
-    this.showedFinalSpeech = this.showedFinalSpeech.bind(this)
-    this.submitDream = this.submitDream.bind(this)
+    this.toggleShowFinalSpeech = this.toggleShowFinalSpeech.bind(this)
+    this.toggleSubmitDream = this.toggleSubmitDream.bind(this)
     this.toggleListen = this.toggleListen.bind(this)
     this.handleEnd = this.handleEnd.bind(this)
     this.handleListen = this.handleListen.bind(this)
   }
 
-  showedFinalSpeech() {
+  toggleShowFinalSpeech() {
     this.setState({
-      showedFinalSpeech: true
+      showedFinalSpeech: !this.state.showedFinalSpeech
     })
   }
 
-  submitDream() {
+  toggleSubmitDream() {
     this.setState({
-      submittedDream: true
+      submittedDream: !this.state.submittedDream
     })
   }
 
@@ -177,7 +177,7 @@ class HomeSpeechContainer extends Component {
         <p id='click-to-start'>...click to start recording your dream...</p>
       </div>
     ) : (
-      <DreamText dreamText={this.state.dreamText} postDream={this.props.postDream} showedFinalSpeech={this.showedFinalSpeech} submitDream={this.submitDream} history={this.props.history}/>
+      <DreamText dreamText={this.state.dreamText} postDream={this.props.postDream} toggleShowFinalSpeech={this.toggleShowFinalSpeech} toggleSubmitDream={this.toggleSubmitDream} history={this.props.history}/>
     )
   }
 }

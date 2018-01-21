@@ -34,6 +34,7 @@ export const postDream = dream => dispatch =>
       const action = addDream(dream);
       dispatch(action);
       console.log("saved dream!");
+      history.push('/dream-history')
     })
     .catch(err => console.log(err));
 

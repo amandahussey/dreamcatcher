@@ -17,8 +17,7 @@ const Main = props => {
   return (
     <div>
       <NavBar />
-      <HomeSpeechContainer />
-      {/* <SpeechInput /> */}
+      {children}
     </div>
   );
 };

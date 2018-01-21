@@ -21,10 +21,9 @@ class DreamText extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    this.props.toggleSubmitDream()
+    this.props.toggleShowFinalSpeech()
     this.props.postDream({ dream: this.state.dreamTextEdit })
-    this.props.submitDream()
-    this.props.showedFinalSpeech()
-    this.props.history.push('/record-new-dream')
   }
 
   render() {
