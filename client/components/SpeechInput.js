@@ -98,8 +98,7 @@ class SpeechInput extends Component {
           <div id="interimResults" style={interimStyle} />
           <div id="finalResults" style={finalStyle} />
         </div>
-        <button onClick={this.toggleListen}
-          style={microphoneButton}>
+        <button onClick={this.toggleListen} style={microphoneButton}>
           <img style={microphoneImg} src="/images/microphone.png" />
         </button>
         <div id="diagnostic" />
@@ -120,26 +119,33 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     background: 'red',
-    margin: '5em'
+    position: 'relative',
+    textAlign: 'center',
+    color: 'white'
   },
   microphoneButton: {
     borderRadius: "50%",
     background: "black",
     width: '60px'
   },
+  resultsStyle: {
+    padding: "2em",
+    position: 'absolute',
+    top: '15%',
+    left: '20%',
+    right: '20%'
+  },
+  interimStyle: {
+    color: "gray",
+    background: 'yellow'
+  },
+  finalStyle: {
+    color: "black",
+    background: 'green'
+  },
   microphoneImg: {
     padding: ".5em"
   },
-  interimStyle: {
-    color: "gray"
-  },
-  finalStyle: {
-    color: "black"
-  },
-  resultsStyle: {
-    color: "gray",
-    padding: "2em"
-  }
 };
 
 const {

@@ -28,7 +28,7 @@ const styles = {
   },
   menu: {
     padding: '1em',
-    fontColor: 'white'
+    color: 'lightgray'
   }
 }
 

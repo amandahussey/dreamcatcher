@@ -1,7 +1,11 @@
 body {
-  font-family: sans-serif;
-  background: rgb(68, 6, 68);
+  /* font-family: 'Kavivanar', cursive; */
+  font-family: 'Raleway Dots', cursive;
+  /* font-family: 'Mirza', cursive;
+  font-family: 'Cutive Mono', monospace; */
+  background: rgb(16, 2, 19);
   margin: 0;
+  color:lightgray;
 }
 
 a {
@@ -21,3 +25,51 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#title {
+  transition: all 1s;
+}
+
+#title.dissolve {
+  opacity: 0;
+}
+
+#dreamcatcher-img {
+  transition: transform 1.5s ease-in-out .2s, opacity 1s ease-in-out 1.7s;
+}
+
+#dreamcatcher-img.animate {
+  transform: scale(0.36);
+  transform-origin: 50% 20%;
+  opacity: 0;
+}
+
+#dreamcircle {
+  width: 80px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s ease-in-out 1.8s;
+  transform: translateY(-362px);
+}
+
+#dreamcircle.appear {
+  visibility: visible;
+  opacity: 1;
+}
+
+#click-to-start {
+  width: 200px;
+  text-align: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s ease-in-out 1.8s;
+  transform: translateY(-300px);
+
+}
+
+#click-to-start.appear {
+  visibility: visible;
+  opacity: 1;
+}
+
+

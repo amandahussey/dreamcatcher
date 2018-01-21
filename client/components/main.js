@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import { logout } from "../store";
-import { SpeechInput, Interpretation, NavBar } from "./index";
+import { SpeechInput, Interpretation, NavBar, Home } from "./index";
 
 /**
  * COMPONENT
@@ -17,9 +17,8 @@ const Main = props => {
   return (
     <div>
       <NavBar />
-      <div style={title}>dreamcatcher</div>
-      <SpeechInput />
-      {/* <Interpretation /> */}
+      <Home />
+      {/* <SpeechInput /> */}
     </div>
   );
 };
@@ -53,12 +52,3 @@ Main.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 };
-
-const styles = {
-  title: {
-    color: 'white',
-    margin: '0 5em',
-  }
-}
-
-const { title } = styles
