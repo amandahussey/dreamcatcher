@@ -88,10 +88,13 @@ class HomeSpeechContainer extends Component {
       console.log('finalTranscript', finalTranscript)
 
       const transcriptArr = finalTranscript.split(' ')
-      const stopListening = transcriptArr.slice(-3, -1)
-      console.log('stopListening', stopListening)
+      const stopCmd = transcriptArr.slice(-3, -1)
+      console.log('stopCmd', stopCmd)
 
-      if (stopListening[0] === 'stop' && stopListening[1] === 'listening') {
+      if ( (stopCmd[0] === 'stop' && stopCmd[1] === 'listening') ||
+           (stopCmd[0] === 'stop' && stopCmd[1] === 'recording') ||
+           (stopCmd[1] === 'stop')
+        ) {
         recognition.stop()
         recognition.onend = () => {
           console.log("Stopped listening per command")
@@ -99,7 +102,7 @@ class HomeSpeechContainer extends Component {
           const dream = finalTranscript
           console.log('finalTranscript onend cmd: ', finalTranscript)
           console.log('Dream: ', dream)
-          postDream({dream})
+          this.props.postDream({dream})
         }
       }
     }
