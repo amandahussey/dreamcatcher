@@ -7,15 +7,6 @@ import { postDream } from "../store";
 import { DreamText } from './index'
 
 
-//--------------------------ANIMATE------------------------------------------
-
-const animate = () => {
-  document.getElementById('dreamcatcher-img').className = 'animate'
-  document.getElementById('title').className = 'dissolve'
-  document.getElementById('dreamcircle').className = 'appear'
-  document.getElementById('click-to-start').className = 'appear'
-}
-
 //-------------------------SPEECH-SETUP--------------------------------------
 
 const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
@@ -37,7 +28,7 @@ recognition.lang = "en-US";
 
 //-------------------------COMPONENT-START-----------------------------------
 
-class HomeSpeechContainer extends Component {
+class SpeechContainer extends Component {
 
   constructor() {
     super();
@@ -47,24 +38,11 @@ class HomeSpeechContainer extends Component {
       showFinalSpeech: false,
       submittedDream: false
     };
-    this.showedFinalSpeech = this.showedFinalSpeech.bind(this)
-    this.submitDream = this.submitDream.bind(this)
     this.toggleListen = this.toggleListen.bind(this)
     this.handleEnd = this.handleEnd.bind(this)
     this.handleListen = this.handleListen.bind(this)
   }
 
-  showedFinalSpeech() {
-    this.setState({
-      showedFinalSpeech: true
-    })
-  }
-
-  submitDream() {
-    this.setState({
-      submittedDream: true
-    })
-  }
 
   toggleListen() {
     this.setState({ listening: !this.state.listening }, () => {
@@ -78,7 +56,7 @@ class HomeSpeechContainer extends Component {
         clickToStartInnerHTML = '...recording dream...'
       } else {
         dreamcircleClass = 'appear'
-        clickToStartInnerHTML = '...click to start recording your dream...'
+        clickToStartInnerHTML = '...click to start recording dream...'
       }
 
       dreamcircle.className = dreamcircleClass
@@ -159,25 +137,19 @@ class HomeSpeechContainer extends Component {
 //------------------------------RENDER---------------------------------------
 
   render() {
-
+    console.log('this.state.dreamText', this.state.dreamText)
     return !this.state.showFinalSpeech ?
     (
       <div style={container}>
-        <div id='title' style={title}>d r e a m c a t c h e r</div>
-        <img id='dreamcatcher-img'
-          src='/images/dreamcatcher.png'
-          style={img}
-          onClick={animate}
-        />
         <img
           id='dreamcircle'
           src='/images/dreamcircle.png'
           onClick={this.toggleListen}
         />
-        <p id='click-to-start'>...click to start recording your dream...</p>
+        <p id='click-to-start'>...click to start recording dream...</p>
       </div>
     ) : (
-      <DreamText dreamText={this.state.dreamText} postDream={this.props.postDream} showedFinalSpeech={this.showedFinalSpeech} submitDream={this.submitDream} history={this.props.history}/>
+      <DreamText dreamText={this.state.dreamText} postDream={this.props.postDream} />
     )
   }
 }
@@ -189,7 +161,7 @@ const mapDispatch = dispatch => {
   return bindActionCreators({postDream}, dispatch)
 };
 
-export default withRouter(connect(mapState, mapDispatch)(HomeSpeechContainer))
+export default connect(mapState, mapDispatch)(SpeechContainer);
 
 
 //------------------------------CSS------------------------------------------

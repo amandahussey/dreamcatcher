@@ -10,15 +10,38 @@ class NavBar extends Component {
     this.state = {
       dropdown: false
     };
+    this.handleClick = this.handleClick.bind(this)
   }
+
+  handleClick() {
+    this.setState({ dropdown: !this.state.dropdown}, () => {
+      const dropdown = document.getElementById('dropdown')
+      dropdown.className = this.state.dropdown ? 'show dropdown-content' : 'dropdown-content'
+    })
+  }
+
   render() {
     return (
-      <div style={navContainer}>
-        <TiThMenu size={30} style={menu} />
+      <div>
+        <div style={navContainer}>
+          <TiThMenu onClick={this.handleClick} size={30} style={menu} />
+        </div>
+        <div id="dropdown" className="dropdown-content">
+          <div style={record}>
+            <Link to="/record-new-dream">record</Link>
+          </div>
+          <div style={history}>
+            <Link to="#">history</Link>
+          </div>
+          <div style={settings}>
+            <Link to="#">settings</Link>
+          </div>
+        </div>
       </div>
     )
   }
 }
+
 export default withRouter(NavBar);
 
 const styles = {
@@ -29,7 +52,18 @@ const styles = {
   menu: {
     padding: '1em',
     color: 'lightgray'
-  }
+  },
+  record: {
+    background: '#2A1D7D',
+    borderRadius: '10px 10px 0 0'
+  },
+  history: {
+    background: '#5C57A5'
+  },
+  settings: {
+    background: '#12314B',
+    borderRadius: '0 0 10px 10px'
+  },
 }
 
-const { navContainer, menu } = styles
+const { navContainer, menu, record, history, settings } = styles

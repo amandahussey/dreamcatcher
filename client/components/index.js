@@ -10,3 +10,4 @@ export { default as HomeSpeechContainer } from "./HomeSpeechContainer";
 export { default as Interpretation } from "./Interpretation";
 export { default as NavBar } from "./NavBar";
 export { default as DreamText } from './DreamText'
+export { default as SpeechContainer } from './SpeechContainer'

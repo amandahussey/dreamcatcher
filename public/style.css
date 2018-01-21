@@ -53,6 +53,11 @@ form div {
   transition: opacity 1s 2s, visibility 1s 2s, transform 1s;
 }
 
+#dreamcirlce.static {
+  visibility: visible;
+  opacity: 1;
+}
+
 #dreamcircle.appear {
   visibility: visible;
   opacity: 1;
@@ -110,4 +115,28 @@ form div {
   100% {
     -webkit-transform: rotate(359deg) scale(1);
   }
+}
+
+.dropdown-content {
+  display: none;
+  z-index: 1;
+  transition: all 1s;
+}
+
+.show {
+  display: block;
+  position: absolute;
+  top: 3em;
+  right: 1em;
+  margin: .5em 0;
+}
+
+.show.dropdown-content > div {
+  padding: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.show.dropdown-content a {
+  color: lightgray;
 }

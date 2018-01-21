@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
+import { Redirect } from "react-router";
 
 class DreamText extends Component {
 
@@ -21,6 +22,9 @@ class DreamText extends Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.postDream({ dream: this.state.dreamTextEdit })
+    this.props.submitDream()
+    this.props.showedFinalSpeech()
+    this.props.history.push('/record-new-dream')
   }
 
   render() {
