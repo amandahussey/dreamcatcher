@@ -37,7 +37,6 @@ class HomeSpeechContainer extends Component {
     super();
     this.state = {
       listening: false,
-      dream: "",
       showFinalSpeech: false
     };
     this.toggleListen = this.toggleListen.bind(this)
@@ -55,7 +54,9 @@ class HomeSpeechContainer extends Component {
 
   handleListen() {
 
-    console.log('listening', this.state.listening)
+    let finalTranscript = ''
+
+    console.log('this.state.listening?', this.state.listening)
 
     if (this.state.listening) {
       recognition.start()
@@ -68,29 +69,39 @@ class HomeSpeechContainer extends Component {
       console.log('else statement')
       recognition.stop()
       recognition.onend = () => {
-        console.log("Stopped listening")
+        console.log("Stopped listening per click")
       }
     }
 
     recognition.onstart = () => {
-      console.log("Listening")
+      console.log("Listening!")
     }
 
     recognition.onresult = event => {
-      const interim = document.getElementById("interimResults"),
-            final = document.getElementById("finalResults"),
-            diagnostic = document.getElementById("diagnostic")
-
-      let interimTranscripts = '',
-          finalTranscripts = ''
+      let interimTranscript = ''
 
       for (let i = event.resultIndex; i < event.results.length; i++) {
         const transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) finalTranscripts += transcript;
-        else interimTranscripts += transcript;
+        if (event.results[i].isFinal) finalTranscript += transcript + ' ';
+        else interimTranscript += transcript;
       }
-      interim.innerHTML = interimTranscripts;
-      final.innerHTML += finalTranscripts + ' ';
+      console.log('finalTranscript', finalTranscript)
+
+      const transcriptArr = finalTranscript.split(' ')
+      const stopListening = transcriptArr.slice(-3, -1)
+      console.log('stopListening', stopListening)
+
+      if (stopListening[0] === 'stop' && stopListening[1] === 'listening') {
+        recognition.stop()
+        recognition.onend = () => {
+          console.log("Stopped listening per command")
+          document.getElementById('dreamcircle').className = 'appear'
+          const dream = finalTranscript
+          console.log('finalTranscript onend cmd: ', finalTranscript)
+          console.log('Dream: ', dream)
+          postDream({dream})
+        }
+      }
     }
 
     recognition.onerror = event => {
@@ -101,30 +112,19 @@ class HomeSpeechContainer extends Component {
 
   render() {
     return (
-      <div>
-
-        <div style={container}>
-          <div id='title' style={title}>d r e a m c a t c h e r</div>
-          <img id='dreamcatcher-img'
-            src='/images/dreamcatcher.png'
-            style={img}
-            onClick={handleClick}
-          />
-          <img
-            id='dreamcircle'
-            src='/images/dreamcircle.png'
-            onClick={this.toggleListen}
-          />
-          <p id='click-to-start'>...click to begin recording...</p>
-        </div>
-
-        <div style={speechContainer}>
-          <div id="results" style={resultsStyle}>
-            <div id="interimResults" style={interimStyle} />
-            <div id="finalResults" style={finalStyle} />
-          </div>
-        </div>
-
+      <div style={container}>
+        <div id='title' style={title}>d r e a m c a t c h e r</div>
+        <img id='dreamcatcher-img'
+          src='/images/dreamcatcher.png'
+          style={img}
+          onClick={handleClick}
+        />
+        <img
+          id='dreamcircle'
+          src='/images/dreamcircle.png'
+          onClick={this.toggleListen}
+        />
+        <p id='click-to-start'>...click to begin recording...</p>
       </div>
     );
   }
@@ -154,40 +154,10 @@ const styles = {
     width: '400px',
     padding: '1em'
   },
-  speechContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    background: 'red',
-    position: 'relative',
-    textAlign: 'center',
-    color: 'white'
-  },
-  resultsStyle: {
-    padding: "2em",
-    position: 'absolute',
-    top: '15%',
-    left: '20%',
-    right: '20%'
-  },
-  interimStyle: {
-    color: "gray",
-    background: 'yellow'
-  },
-  finalStyle: {
-    color: "black",
-    background: 'green'
-  },
-  microphoneImg: {
-    padding: ".5em"
-  },
 };
 
 const {
   container,
   title,
   img,
-  speechContainer,
-  interimStyle,
-  finalStyle,
-  resultsStyle
 } = styles;
