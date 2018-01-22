@@ -34,7 +34,7 @@ const styles = {
     padding: '1em',
   },
   text: {
-    padding: '1em',
+    padding: '0 1em',
   }
 }
 
