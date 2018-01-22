@@ -14,6 +14,10 @@ class HistoryCloud extends Component {
     this.generateWordCloud = this.generateWordCloud.bind(this)
   }
 
+  componentDidMount() {
+    if (this.props.dreams.length) this.generateWordCloud()
+  }
+
   componentDidUpdate() {
     if (this.props.dreams.length) this.generateWordCloud()
   }
@@ -31,13 +35,13 @@ class HistoryCloud extends Component {
     const negativeWordsSentimentScore = negativeWords.map(negativeWord => {
       return [
         negativeWord,
-        Math.abs(sentiment(negativeWord).score) * 3
+        Math.abs(sentiment(negativeWord).score) * 2.5
       ]
     })
     const positiveWordsSentimentScore = positiveWords.map(positiveWord => {
       return [
         positiveWord,
-        (sentiment(positiveWord).score) * 3
+        (sentiment(positiveWord).score) * 2.5
       ]
     })
 
@@ -109,7 +113,7 @@ class HistoryCloud extends Component {
       backgroundColor: '#100213',
       minSize: '16px',
       drawOutOfBound: true,
-      wait: setTimeout(1000)
+      wait: setTimeout(600)
     }
 
     WordCloud(document.getElementById('canvas'), options)
@@ -131,13 +135,14 @@ const mapState = state => {
 
 const mapDispatch = null
 
-export default connect(mapState, mapDispatch)(HistoryCloud)
+export default withRouter(connect(mapState, mapDispatch)(HistoryCloud))
 
 const styles = {
   canvasContainer: {
     display: 'flex',
     background: '#12314B',
     margin: '2em',
+    padding: '2em 0',
     width: '250px',
     borderRadius: '10px'
   },

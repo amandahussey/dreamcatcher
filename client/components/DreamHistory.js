@@ -31,7 +31,7 @@ const styles = {
     display: 'flex',
     flexFlow: 'wrap',
     justifyContent: 'center',
-    padding: '3em'
+    padding: '2em 0 5em 0'
   },
 }
 

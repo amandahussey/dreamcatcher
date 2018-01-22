@@ -55,7 +55,7 @@ const styles = {
     fontSize: '1.5em',
     lineHeight: '1.5em',
     width: '600px',
-    padding: '1em',
+    padding: '1em 1em 2em 1em',
     borderRadius: '6px'
   },
   saveButton: {
