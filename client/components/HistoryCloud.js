@@ -41,7 +41,7 @@ class HistoryCloud extends Component {
     const positiveWordsSentimentScore = positiveWords.map(positiveWord => {
       return [
         positiveWord,
-        (sentiment(positiveWord).score) * 2.5
+        (sentiment(positiveWord).score) * 2.2
       ]
     })
 
@@ -113,7 +113,7 @@ class HistoryCloud extends Component {
       backgroundColor: '#100213',
       minSize: '16px',
       drawOutOfBound: true,
-      wait: setTimeout(600)
+      wait: setTimeout(400)
     }
 
     WordCloud(document.getElementById('canvas'), options)
