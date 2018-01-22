@@ -113,7 +113,7 @@ class HistoryCloud extends Component {
       backgroundColor: '#100213',
       minSize: '16px',
       drawOutOfBound: true,
-      wait: setTimeout(400)
+      wait: setTimeout(10)
     }
 
     WordCloud(document.getElementById('canvas'), options)
